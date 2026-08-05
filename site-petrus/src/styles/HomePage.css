@@ -1,0 +1,87 @@
+/* src/styles/HomePage.css */
+
+.hero-section {
+  background-color: #FFD700;
+  padding: 60px 20px; /* Ajuste para mobile */
+  text-align: center;
+  color: #333;
+}
+
+.hero-section h1 {
+  font-size: 2.5em; /* Ajuste para mobile */
+  margin-bottom: 15px; /* Ajuste para mobile */
+}
+
+.hero-section p {
+  font-size: 1.1em; /* Ajuste para mobile */
+  margin-bottom: 30px; /* Ajuste para mobile */
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-section button {
+  background-color: #333;
+  color: #fff;
+  padding: 12px 25px; /* Ajuste para mobile */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em; /* Ajuste para mobile */
+  transition: background-color 0.3s ease;
+}
+
+.hero-section button:hover {
+  background-color: #555;
+}
+
+.services-section {
+  background-color: #f0f0f0;
+  padding: 60px 20px; /* Ajuste para mobile */
+  text-align: center;
+}
+
+.services-section h2 {
+  font-size: 2em; /* Ajuste para mobile */
+  margin-bottom: 40px; /* Ajuste para mobile */
+}
+
+.services-grid-home {
+  display: flex;
+  flex-direction: column; /* Empilha no mobile */
+  align-items: center; /* Centraliza no mobile */
+  gap: 20px; /* Reduzir gap para mobile */
+  padding: 0 10px; /* Adicionar padding horizontal */
+}
+
+/* Media query para telas maiores (desktop) */
+@media (min-width: 768px) {
+  .hero-section {
+    padding: 80px 0;
+  }
+  .hero-section h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+  .hero-section p {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+  }
+  .hero-section button {
+    padding: 15px 30px;
+    font-size: 1.1em;
+  }
+  .services-section {
+    padding: 60px 0;
+  }
+  .services-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 50px;
+  }
+  .services-grid-home {
+    flex-direction: row; /* Volta para linha no desktop */
+    justify-content: center;
+    gap: 30px;
+    padding: 0; /* Remove padding extra */
+  }
+}

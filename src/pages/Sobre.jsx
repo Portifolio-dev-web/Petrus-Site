@@ -5,6 +5,7 @@ import { MaskedReveal, FadeUp } from "@/components/Kinetic";
 import Seo from "@/components/Seo";
 import { buildWhatsappUrl } from "@/lib/api";
 import { useSettings } from "@/context/SettingsContext";
+import imagemEquipe from '../assets/Equipe Multidisciplinar Industrial.png'
 
 // Valores atualizados com base na nova identidade visual da Petrus
 const VALUES = [
@@ -88,8 +89,8 @@ export default function Sobre() {
                 >
                     {/* Recomendo substituir esta imagem por uma foto real da equipe ou de um treinamento da Petrus */}
                     <img
-                        src="https://images.unsplash.com/photo-1543357644-160b53c087e8?crop=entropy&cs=srgb&fm=jpg&auto=format&w=1200&q=85"
-                        alt="Instrutor PETRUS em campo"
+                        src={imagemEquipe}
+                        alt="Equipe Multidisciplinar Industrial em campo"
                         className="w-full h-full object-cover grayscale"
                     />
                 </motion.div>

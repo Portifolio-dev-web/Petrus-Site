@@ -75,7 +75,7 @@ export default function Servicos() {
                                             <img
                                                 src={nr.image}
                                                 alt={nr.title}
-                                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[900ms]"
+                                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-900ms"
                                                 loading="lazy"
                                             />
                                         </div>

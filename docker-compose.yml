@@ -1,0 +1,37 @@
+services:
+  web:
+    container_name: petrus-site-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: development-dependencies-env 
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true 
+      - WATCHPACK_POLLING=true
+      - WDS_SOCKET_PORT=0
+      - REACT_APP_API_URL=http://localhost:5000
+      - VITE_API_URL=http://localhost:5000
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm start
+    depends_on:
+      - api
+
+  api:
+    container_name: petrus-site-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - FLASK_ENV=development
+      # Cole a sua string de conexão do Supabase aqui:
+      - DATABASE_URL=postgresql://postgres.ujdxokqfkvoalpltzsym:bHW3Tsj6sF&35#r@aws-0-sa-east-1.pooler.supabase.com:6543/postgres

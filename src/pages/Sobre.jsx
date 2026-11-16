@@ -1,67 +1,63 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowRight, EnvelopeSimple, Phone } from "@phosphor-icons/react";
+import { ArrowRight } from "lucide-react";
 import { MaskedReveal, FadeUp } from "@/components/Kinetic";
 import Seo from "@/components/Seo";
-import { buildWhatsappUrl } from "@/lib/api";
-import { useSettings } from "@/context/SettingsContext";
-import imagemEquipe from '../assets/Equipe Multidisciplinar Industrial.png'
+import ImageSlot from "@/components/ImageSlot";
+import SectionTitle from "@/components/SectionTitle";
+import { GALLERY_ITEMS, ROSTER_PHOTOS } from "@/lib/mediaPlaceholders";
+import { TIMELINE, VALUES, HASHTAG } from "@/lib/univoleiData";
 
-// Valores atualizados com base na nova identidade visual da Petrus
-const VALUES = [
-    ["Cuidado Humano", "As pessoas vêm em primeiro lugar. Respeitamos, ouvimos e apoiamos."],
-    ["Segurança Psicológica", "Um ambiente seguro para falar, compartilhar e crescer."],
-    ["Foco no Aprendizado", "Aprendemos juntos com as experiências para evoluir."],
-    ["Confiança e Transparência", "Relações claras, honestas e consistentes constroem equipes fortes."],
-];
+const MOMENTS = GALLERY_ITEMS.filter((g) => g.id.startsWith("momento-"));
 
 export default function Sobre() {
-    const { settings } = useSettings();
     return (
         <>
             <Seo
-                title="Sobre a PETRUS — Consultoria de Segurança e Treinamentos"
-                description="25 anos em Segurança do Trabalho e Gestão de Emergências. Especialistas em consultoria humanizada, planos de emergência e treinamentos."
+                title="O Clube — Nossa História | Univôlei Sumaré"
+                description="A história do Univôlei Sumaré desde 14/11/2022: valores, estrutura de treinos, comissão técnica e momentos marcantes."
             />
 
-            <section className="relative border-b border-[color:var(--petrus-border)]">
-                <div className="absolute inset-0 grid-lines opacity-30" />
+            <section className="relative border-b border-white/10 overflow-hidden">
+                <div className="absolute inset-0 court-lines" />
+                <div className="absolute inset-0 spotlight-uni" />
                 <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 pt-24 md:pt-32 pb-16">
-                    <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Sobre nós</p>
+                    <p className="text-xs font-bold uppercase tracking-[0.25em] text-uni-orange mb-6">🦁 O Clube</p>
                     <MaskedReveal
                         tag="h1"
-                        className="font-display uppercase text-5xl md:text-7xl lg:text-8xl leading-[0.85] tracking-tight text-neutral-900 max-w-5xl"
-                        lines={["25 anos protegendo", <span key="1">vidas e <span className="text-[color:var(--petrus-yellow)]">patrimônios</span>.</span>]}
+                        className="font-display uppercase italic text-5xl md:text-7xl lg:text-8xl leading-[0.88] tracking-tight text-uni-silver max-w-5xl"
+                        lines={["Nossa história", <span key="1">& <span className="text-gradient-uni">identidade</span>.</span>]}
                     />
                 </div>
             </section>
 
-            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28 grid gap-14 lg:grid-cols-12">
-                <FadeUp className="lg:col-span-6">
-                    <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-neutral-600 mb-4">/ Experiência</p>
-                    <p className="text-neutral-800 text-lg leading-relaxed">
-                        Com 25 anos de atuação sólida em Segurança do Trabalho e Gestão de Emergências, a PETRUS Consultoria dedica-se a proteger a continuidade dos negócios. Nossa expertise operacional abrange Análise de Riscos, Planejamento de Resposta, Treinamentos e Simulados, entregando conhecimento prático que transforma planos em ações eficazes e confiáveis.
-                    </p>
-                </FadeUp>
-                <FadeUp className="lg:col-span-6" delay={0.1}>
-                    <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-neutral-600 mb-4">/ Propósito</p>
-                    <p className="text-neutral-800 text-lg leading-relaxed">
-                        Protegendo pessoas. Desenvolvendo potencial. Salvando vidas é o nosso propósito. Adotamos uma consultoria humanizada focada em pessoas, processos e resultados, construindo ambientes seguros com empatia, eficiência e aplicando métodos práticos como a Abordagem HOP.
-                    </p>
-                </FadeUp>
+            {/* Linha do tempo */}
+            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28">
+                <SectionTitle eyebrow="Linha do tempo" className="mb-14">Desde 14/11/2022.</SectionTitle>
+                <ol className="relative border-l-2 border-uni-blue/30 ml-3 space-y-12">
+                    {TIMELINE.map((t, i) => (
+                        <FadeUp key={t.date} delay={i * 0.05}>
+                            <li className="pl-8 relative">
+                                <span className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-uni-orange ring-4 ring-uni-bg" />
+                                <span className="font-mono-c text-sm text-uni-blue">{t.date}</span>
+                                <h3 className="font-display uppercase italic text-3xl text-uni-silver mt-1">{t.title}</h3>
+                                <p className="text-uni-muted mt-2 max-w-2xl leading-relaxed">{t.text}</p>
+                            </li>
+                        </FadeUp>
+                    ))}
+                </ol>
             </section>
 
-            <section className="bg-[color:var(--petrus-surface)] border-y border-[color:var(--petrus-border)]">
+            {/* Valores */}
+            <section className="border-y border-white/10 bg-uni-card/40">
                 <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28">
-                    <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Valores</p>
-                    <h2 className="font-display uppercase text-4xl md:text-6xl text-neutral-900 mb-14 max-w-3xl leading-[0.9]">Nossa missão e valores.</h2>
-                    <div className="grid md:grid-cols-2 gap-px bg-[color:var(--petrus-border)]">
+                    <SectionTitle eyebrow="Valores" color="text-uni-blue" className="mb-12">O que faz o Leão rugir.</SectionTitle>
+                    <div className="grid md:grid-cols-2 gap-5">
                         {VALUES.map(([t, d], i) => (
                             <FadeUp key={t} delay={i * 0.05}>
-                                <div className="bg-[color:var(--petrus-black)] p-8 md:p-12 h-full">
-                                    <div className="font-mono-c text-[color:var(--petrus-yellow)] text-sm">/0{i + 1}</div>
-                                    <h3 className="font-display uppercase text-3xl text-neutral-900 mt-4">{t}</h3>
-                                    <p className="text-neutral-600 mt-4 leading-relaxed">{d}</p>
+                                <div className="glass rounded-2xl p-8 h-full hover:border-uni-orange/50 transition-colors">
+                                    <div className="font-mono-c text-uni-orange text-sm">/0{i + 1}</div>
+                                    <h3 className="font-display uppercase italic text-3xl text-uni-silver mt-3">{t}</h3>
+                                    <p className="text-uni-muted mt-3 leading-relaxed">{d}</p>
                                 </div>
                             </FadeUp>
                         ))}
@@ -69,53 +65,51 @@ export default function Sobre() {
                 </div>
             </section>
 
-            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28 grid gap-14 lg:grid-cols-12 items-center">
-                <div className="lg:col-span-7">
-                    <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Destaque</p>
-                    <h2 className="font-display uppercase text-4xl md:text-5xl text-neutral-900 leading-[0.9] mb-6">
-                        Equipe multidisciplinar com <span className="text-[color:var(--petrus-yellow)]">resultados comprovados</span>.
-                    </h2>
-                    <p className="text-neutral-700 leading-relaxed max-w-2xl">
-                        Nossa equipe é formada por engenheiros, médicos do trabalho e psicólogos organizacionais. Comprovamos nossa eficiência com cases de excelência, como o <strong>Case Honda</strong>, onde alcançamos a marca de zero acidentes graves em operações industriais. Confiança e resultados práticos que geram valor.
+            {/* Estrutura de treinos */}
+            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28 grid gap-10 lg:grid-cols-2 items-center">
+                <SectionTitle eyebrow="Estrutura">Treinos em Sumaré, do básico ao competitivo.</SectionTitle>
+                <FadeUp delay={0.1} className="space-y-6">
+                    <p className="text-uni-muted text-lg leading-relaxed">
+                        Organizamos o clube em três frentes: <strong className="text-uni-silver">Treinos Adulto</strong> (equipes competitivas),{" "}
+                        <strong className="text-uni-silver">Treinos Projeto</strong> (iniciação) e <strong className="text-uni-silver">Nova Geração</strong>{" "}
+                        (evolução técnica). Assim cada atleta treina no ritmo certo e sabe qual é o próximo passo.
                     </p>
-                </div>
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                    className="lg:col-span-5 relative aspect-[4/5] overflow-hidden border border-[color:var(--petrus-border-hi)]"
-                    style={{ clipPath: "polygon(0 0, 100% 0, 100% 92%, 8% 100%)" }}
-                >
-                    {/* Recomendo substituir esta imagem por uma foto real da equipe ou de um treinamento da Petrus */}
-                    <img
-                        src={imagemEquipe}
-                        alt="Equipe Multidisciplinar Industrial em campo"
-                        className="w-full h-full object-cover grayscale"
-                    />
-                </motion.div>
+                    <Link to="/categorias" className="btn-uni-outline">Ver categorias <ArrowRight size={16} /></Link>
+                </FadeUp>
             </section>
 
-            <section className="border-t border-[color:var(--petrus-border)] bg-[color:var(--petrus-yellow)] text-black">
-                <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-                    <div className="max-w-2xl">
-                        <h3 className="font-display uppercase text-3xl md:text-5xl leading-tight mb-4">
-                            Resultados eficientes com método prático.
-                        </h3>
-                        <div className="flex flex-col gap-2 font-mono-c text-sm font-bold tracking-wide">
-                            <span className="flex items-center gap-2"><Phone size={16} /> 19 99684-0992</span>
-                            <span className="flex items-center gap-2"><EnvelopeSimple size={16} /> petro_seg@hotmail.com</span>
-                        </div>
+            {/* Galeria de momentos */}
+            <section className="max-w-[1440px] mx-auto px-6 md:px-10 pb-20 md:pb-28">
+                <SectionTitle eyebrow="Momentos marcantes" className="mb-10">Aniver. 2k26 & conquistas.</SectionTitle>
+                <div className="grid sm:grid-cols-2 gap-4">
+                    {MOMENTS.map((m, i) => (
+                        <FadeUp key={m.id} delay={(i % 2) * 0.06}>
+                            <ImageSlot slot={m} aspectRatio="4/3" className="rounded-2xl" />
+                        </FadeUp>
+                    ))}
+                </div>
+            </section>
+
+            {/* Comissão técnica / Diretoria */}
+            <section className="border-t border-white/10 bg-uni-card/40">
+                <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28">
+                    <SectionTitle eyebrow="Comissão Técnica & Diretoria" color="text-uni-blue" className="mb-10">Quem faz acontecer.</SectionTitle>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {ROSTER_PHOTOS.map((p, i) => (
+                            <FadeUp key={p.id} delay={i * 0.05}>
+                                <ImageSlot slot={p} aspectRatio="4/5" className="rounded-2xl" />
+                            </FadeUp>
+                        ))}
                     </div>
-                    
-                    <div className="flex flex-wrap gap-3">
-                        <a href={buildWhatsappUrl(settings.whatsapp || "5519996840992")} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-black text-[color:var(--petrus-yellow)] px-6 py-4 uppercase font-bold text-sm tracking-[0.1em] hover:bg-neutral-900 transition-colors">
-                            Falar no WhatsApp
-                        </a>
-                        <Link to="/contato" className="inline-flex items-center gap-3 border border-black px-6 py-4 uppercase font-bold text-sm tracking-[0.1em] hover:bg-black hover:text-[color:var(--petrus-yellow)] transition-colors">
-                            Contato <ArrowRight size={18} />
-                        </Link>
-                    </div>
+                </div>
+            </section>
+
+            <section className="bg-gradient-to-r from-uni-orange to-uni-orange-2">
+                <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-16 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <h3 className="font-display uppercase italic text-4xl md:text-5xl text-white">Faça parte da história. {HASHTAG}</h3>
+                    <Link to="/seletivas" className="inline-flex items-center gap-2 rounded-full bg-uni-bg text-white px-7 py-4 font-extrabold uppercase tracking-wider text-sm hover:bg-black transition-colors w-fit">
+                        Seletivas 2k27 <ArrowRight size={18} />
+                    </Link>
                 </div>
             </section>
         </>

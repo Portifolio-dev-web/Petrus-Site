@@ -1,114 +1,132 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowRight, Clock, MapPin, Target } from "lucide-react";
 import { MaskedReveal, FadeUp } from "@/components/Kinetic";
 import Seo from "@/components/Seo";
-import { NR_LIST } from "@/lib/nrData";
-import { TEST_IDS } from "@/lib/testIds";
+import ImageSlot from "@/components/ImageSlot";
+import SectionTitle from "@/components/SectionTitle";
+import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { CATEGORIES, COMPETITIONS, GAMES } from "@/lib/univoleiData";
 
-const CONSULTORIA = [
-    ["PGR — Programa de Gerenciamento de Riscos", "Elaboração, atualização e monitoramento com base em risco real do processo produtivo."],
-    ["PCMSO", "Programa de Controle Médico de Saúde Ocupacional coordenado com médico do trabalho."],
-    ["LTCAT & Insalubridade / Periculosidade", "Perícia técnica com defesa em juízo e conformidade previdenciária."],
-    ["Auditorias de Segurança", "Diagnóstico independente antes de auditorias de cliente ou órgão fiscalizador."],
-    ["Adequação às NRs", "Plano executivo de adequação para múltiplas NRs simultâneas."],
-    ["CIPA — Assessoria e Eleição", "Condução completa do processo eleitoral, plano anual e SIPAT."],
-    ["Palestras / SIPAT", "Temas focados na Abordagem HOP e Segurança Psicológica, substituindo a culpa pelo aprendizado contínuo das equipes."],
-    ["Primeiros Socorros", "Capacitação prática para ação imediata em emergências, priorizando a estabilização e a proteção real da vida no chão de fábrica."]
-];
-
-const OUTRAS_NRs = ["NR 06 · EPI", "NR 10 · Elétrica", "NR 11 · Movimentação", "NR 17 · Ergonomia", "NR 18 · Construção", "NR 20 · Inflamáveis", "NR 23 · Incêndio", "NR 26 · Sinalização"];
-
-export default function Servicos() {
+export default function Categorias() {
     return (
         <>
-            <Seo title="Serviços — Consultoria SST e Treinamentos NR | PETRUS" description="Consultoria em Segurança do Trabalho: PGR, PCMSO, LTCAT, CIPA e treinamentos NR 05, NR 12, NR 33 e NR 35." />
+            <Seo
+                title="Categorias, Treinos & Competições | Univôlei Sumaré"
+                description="Treinos Adulto, Treinos Projeto e Nova Geração do Univôlei Sumaré, além das competições: Municipal 2K26, CRV 2026 e amistosos."
+            />
 
-            <section className="relative border-b border-[color:var(--petrus-border)]">
-                <div className="absolute inset-0 grid-lines opacity-30" />
+            <section className="relative border-b border-white/10 overflow-hidden">
+                <div className="absolute inset-0 court-lines" />
+                <div className="absolute inset-0 spotlight-uni" />
                 <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 pt-24 md:pt-32 pb-16">
-                    <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Serviços</p>
+                    <p className="text-xs font-bold uppercase tracking-[0.25em] text-uni-blue mb-6">Categorias & Torneios</p>
                     <MaskedReveal
                         tag="h1"
-                        className="font-display uppercase text-5xl md:text-7xl lg:text-8xl leading-[0.85] tracking-tight text-neutral-900 max-w-5xl"
-                        lines={["Consultoria técnica", <span key="1"><span className="text-[color:var(--petrus-yellow)]">+ </span>treinamentos NR.</span>]}
+                        className="font-display uppercase italic text-5xl md:text-7xl lg:text-8xl leading-[0.88] tracking-tight text-uni-silver max-w-5xl"
+                        lines={["Treinos,", <span key="1">categorias & <span className="text-gradient-uni">competições</span>.</span>]}
                     />
                 </div>
             </section>
 
-            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28">
-                <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Consultoria em Segurança do Trabalho</p>
-                <h2 className="font-display uppercase text-3xl md:text-5xl text-neutral-900 leading-[0.9] mb-14 max-w-3xl">Programas, laudos e adequação normativa.</h2>
-                <div className="grid md:grid-cols-2 gap-px bg-[color:var(--petrus-border)]">
-                    {CONSULTORIA.map(([t, d], i) => (
-                        <FadeUp key={t} delay={i * 0.03}>
-                            <div className="bg-[color:var(--petrus-black)] p-8 md:p-10 h-full hover:bg-[color:var(--petrus-card)] transition-colors">
-                                <div className="font-mono-c text-xs uppercase tracking-[0.2em] text-[color:var(--petrus-yellow)]">/{i < 9 ? `0${i + 1}` : i + 1}</div>
-                                <h3 className="font-display uppercase text-xl md:text-2xl text-neutral-900 mt-4">{t}</h3>
-                                <p className="text-neutral-600 mt-3 leading-relaxed">{d}</p>
+            {/* Categorias detalhadas */}
+            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28 space-y-16">
+                {CATEGORIES.map((c, i) => (
+                    <FadeUp key={c.slug}>
+                        <article id={c.slug} className="grid gap-8 lg:grid-cols-12 items-center scroll-mt-24">
+                            <div className={`lg:col-span-5 ${i % 2 ? "lg:order-2" : ""}`}>
+                                <ImageSlot slot={c.image} aspectRatio="4/5" className="rounded-2xl" />
                             </div>
-                        </FadeUp>
-                    ))}
-                </div>
+                            <div className="lg:col-span-7 space-y-5">
+                                <Badge className="bg-uni-orange/15 text-uni-orange border-uni-orange/30 hover:bg-uni-orange/25 uppercase tracking-wider">{c.tag}</Badge>
+                                <h2 className="font-display uppercase italic text-5xl md:text-6xl text-uni-silver leading-[0.92]">{c.title}</h2>
+                                <p className="text-uni-muted text-lg leading-relaxed max-w-2xl">{c.short}</p>
+                                <div className="grid sm:grid-cols-2 gap-4">
+                                    <Info icon={Clock} label="Horários" value={c.horario} />
+                                    <Info icon={MapPin} label="Local" value={c.local} />
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-uni-blue mb-3 flex items-center gap-2"><Target size={14} /> Objetivos</p>
+                                    <ul className="space-y-2">
+                                        {c.objetivos.map((o) => (
+                                            <li key={o} className="flex items-start gap-3 text-uni-silver">
+                                                <span className="mt-2 w-2 h-2 rounded-full bg-uni-orange shrink-0" /> {o}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                    </FadeUp>
+                ))}
             </section>
 
-            <section className="bg-[color:var(--petrus-surface)] border-y border-[color:var(--petrus-border)]">
+            {/* Competições */}
+            <section id="competicoes" className="border-y border-white/10 bg-uni-card/40 scroll-mt-24">
                 <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28">
-                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
-                        <div>
-                            <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Treinamentos NR e Formação Tática</p>
-                            <h2 className="font-display uppercase text-3xl md:text-5xl text-neutral-900 leading-[0.9] max-w-3xl">Certificação com validade nacional.</h2>
-                        </div>
-                    </div>
-                    
-                    <div className="grid md:grid-cols-2 gap-px bg-[color:var(--petrus-border)]">
-                        {NR_LIST.map((nr, i) => (
-                            <FadeUp key={nr.slug} delay={i * 0.04} className={`h-full ${i === 0 ? "md:col-span-2" : ""}`}>
-                                <Link
-                                    to={`/treinamento-${nr.slug}`}
-                                    className="group flex flex-col h-full bg-[color:var(--petrus-black)] overflow-hidden"
-                                    data-testid={TEST_IDS[`nrCardNr${nr.slug.split("-")[1]}`] || `nr-card-${nr.slug}`}
-                                >
-                                    {nr.image && (
-                                        <div className={`overflow-hidden border-b border-[color:var(--petrus-border)] ${i === 0 ? "aspect-video md:aspect-[24/9]" : "aspect-[16/9]"}`}>
-                                            <img
-                                                src={nr.image}
-                                                alt={nr.title}
-                                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-900ms"
-                                                loading="lazy"
-                                            />
-                                        </div>
-                                    )}
-                                    <div className="p-8 md:p-10 flex flex-col flex-grow">
-                                        <div className="flex items-start justify-between mb-8">
-                                            <span className="font-mono-c text-xs uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)]">/ {nr.code}</span>
-                                            <div className="w-10 h-10 rounded-full border border-[color:var(--petrus-border-hi)] flex items-center justify-center group-hover:bg-[color:var(--petrus-yellow)] group-hover:border-[color:var(--petrus-yellow)] transition-all duration-300">
-                                                <ArrowUpRight size={20} className="text-neutral-500 group-hover:text-black transition-colors" />
-                                            </div>
-                                        </div>
-                                        <h3 className="font-display uppercase text-2xl md:text-3xl text-neutral-900 leading-tight mb-4">{nr.title}</h3>
-                                        <p className="text-neutral-600 mb-8 flex-grow">{nr.shortTitle}</p>
-                                        <div className="text-xs font-mono-c uppercase tracking-[0.2em] text-neutral-500 pt-6 border-t border-[color:var(--petrus-border)]">
-                                            {nr.cargaHoraria}
-                                        </div>
+                    <SectionTitle eyebrow="Competições" color="text-uni-blue" className="mb-12">Onde o Leão ruge.</SectionTitle>
+                    <div className="grid md:grid-cols-2 gap-6">
+                        {COMPETITIONS.map((c, i) => (
+                            <FadeUp key={c.name} delay={(i % 2) * 0.06}>
+                                <div className="glass rounded-2xl overflow-hidden h-full hover:border-uni-orange/60 transition-colors">
+                                    {c.image && <ImageSlot slot={c.image} aspectRatio="16/9" className="rounded-none border-0 border-b-2" />}
+                                    <div className="p-6 md:p-8 space-y-3">
+                                        <Badge className="bg-uni-blue/15 text-uni-blue border-uni-blue/30 hover:bg-uni-blue/25">{c.tag}</Badge>
+                                        <h3 className="font-display uppercase italic text-4xl text-uni-silver">{c.name}</h3>
+                                        <p className="text-uni-muted">{c.text}</p>
                                     </div>
-                                </Link>
+                                </div>
                             </FadeUp>
                         ))}
                     </div>
+
+                    <FadeUp className="mt-14">
+                        <h3 className="font-display uppercase italic text-3xl text-uni-silver mb-5">Tabela de jogos</h3>
+                        <div className="glass rounded-2xl overflow-x-auto">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow className="border-white/10 hover:bg-transparent">
+                                        {["Data", "Competição", "Adversário", "Local", "Resultado"].map((h) => (
+                                            <TableHead key={h} className="text-uni-blue uppercase text-xs tracking-wider">{h}</TableHead>
+                                        ))}
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {GAMES.map((g, i) => (
+                                        <TableRow key={i} className="border-white/10 hover:bg-white/5">
+                                            <TableCell className="text-uni-muted whitespace-nowrap">{g.data}</TableCell>
+                                            <TableCell className="text-uni-orange font-bold">{g.competicao}</TableCell>
+                                            <TableCell className="text-uni-silver">Univôlei × {g.adversario}</TableCell>
+                                            <TableCell className="text-uni-muted">{g.local}</TableCell>
+                                            <TableCell className="text-uni-silver font-mono-c">{g.resultado}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
+                    </FadeUp>
                 </div>
             </section>
 
-            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28">
-                <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Outros treinamentos</p>
-                <h2 className="font-display uppercase text-3xl md:text-5xl text-neutral-900 leading-[0.9] max-w-3xl mb-10">Também atendemos:</h2>
-                <div className="flex flex-wrap gap-3">
-                    {OUTRAS_NRs.map((n) => (
-                        <span key={n} className="px-5 py-3 border border-[color:var(--petrus-border-hi)] font-mono-c text-xs uppercase tracking-[0.2em] text-neutral-700 hover:text-[color:var(--petrus-yellow)] hover:border-[color:var(--petrus-yellow)] transition-colors cursor-default">
-                            {n}
-                        </span>
-                    ))}
+            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <h2 className="font-display uppercase italic text-4xl md:text-5xl text-uni-silver">Quer marcar um amistoso?</h2>
+                <div className="flex flex-wrap gap-4">
+                    <Link to="/contato" className="btn-uni">Falar com o clube <ArrowRight size={18} /></Link>
+                    <Link to="/seletivas" className="btn-uni-outline">Seletivas 2k27</Link>
                 </div>
             </section>
         </>
+    );
+}
+
+function Info({ icon: Icon, label, value }) {
+    return (
+        <div className="glass rounded-xl px-4 py-3 flex items-start gap-3">
+            <Icon size={20} className="text-uni-blue mt-0.5 shrink-0" />
+            <div>
+                <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-uni-muted">{label}</div>
+                <div className="text-uni-silver text-sm">{value}</div>
+            </div>
+        </div>
     );
 }

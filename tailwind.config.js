@@ -12,7 +12,20 @@ module.exports = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
       },
+      fontFamily: {
+        display: ['"Barlow Condensed"', 'Manrope', 'sans-serif'],
+      },
       colors: {
+        uni: {
+          bg: '#090D16',
+          card: '#111827',
+          orange: '#FF6B00',
+          'orange-2': '#F97316',
+          blue: '#00A8E8',
+          'blue-2': '#0EA5E9',
+          silver: '#E2E8F0',
+          muted: '#94A3B8',
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

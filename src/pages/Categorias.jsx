@@ -13,8 +13,7 @@ const CONSULTORIA = [
     ["Adequação às NRs", "Plano executivo de adequação para múltiplas NRs simultâneas."],
     ["CIPA — Assessoria e Eleição", "Condução completa do processo eleitoral, plano anual e SIPAT."],
     ["Palestras / SIPAT", "Temas focados na Abordagem HOP e Segurança Psicológica, substituindo a culpa pelo aprendizado contínuo das equipes."],
-    ["Primeiros Socorros", "Capacitação prática para ação imediata em emergências, priorizando a estabilização e a proteção real da vida no chão de fábrica."],
-    ["Formação de Brigadista", "Treinamento tático para resposta a emergências, combate a incêndio e evacuação, ministrado por instrutores com experiência de campo."],
+    ["Primeiros Socorros", "Capacitação prática para ação imediata em emergências, priorizando a estabilização e a proteção real da vida no chão de fábrica."]
 ];
 
 const OUTRAS_NRs = ["NR 06 · EPI", "NR 10 · Elétrica", "NR 11 · Movimentação", "NR 17 · Ergonomia", "NR 18 · Construção", "NR 20 · Inflamáveis", "NR 23 · Incêndio", "NR 26 · Sinalização"];
@@ -56,22 +55,21 @@ export default function Servicos() {
                 <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28">
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
                         <div>
-                            <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Treinamentos NR</p>
+                            <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Treinamentos NR e Formação Tática</p>
                             <h2 className="font-display uppercase text-3xl md:text-5xl text-neutral-900 leading-[0.9] max-w-3xl">Certificação com validade nacional.</h2>
                         </div>
                     </div>
                     
-                    {/* AQUI FOI A GRANDE MUDANÇA: Transformação dos botões em Cards Premium com Imagens */}
                     <div className="grid md:grid-cols-2 gap-px bg-[color:var(--petrus-border)]">
                         {NR_LIST.map((nr, i) => (
-                            <FadeUp key={nr.slug} delay={i * 0.04} className="h-full">
+                            <FadeUp key={nr.slug} delay={i * 0.04} className={`h-full ${i === 0 ? "md:col-span-2" : ""}`}>
                                 <Link
                                     to={`/treinamento-${nr.slug}`}
                                     className="group flex flex-col h-full bg-[color:var(--petrus-black)] overflow-hidden"
                                     data-testid={TEST_IDS[`nrCardNr${nr.slug.split("-")[1]}`] || `nr-card-${nr.slug}`}
                                 >
                                     {nr.image && (
-                                        <div className="aspect-[16/9] overflow-hidden border-b border-[color:var(--petrus-border)]">
+                                        <div className={`overflow-hidden border-b border-[color:var(--petrus-border)] ${i === 0 ? "aspect-video md:aspect-[24/9]" : "aspect-[16/9]"}`}>
                                             <img
                                                 src={nr.image}
                                                 alt={nr.title}

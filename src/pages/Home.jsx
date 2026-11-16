@@ -1,296 +1,258 @@
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
-import {
-    ArrowRight,
-    ArrowUpRight,
-    HardHat,
-    Users,
-    ShieldCheck,
-    Target,
-    WhatsappLogo,
-    Heartbeat,
-    MagnifyingGlass,
-    Lightbulb,
-    FileText
-} from "@phosphor-icons/react";
+import { useRef } from "react";
+import { ArrowRight, Play, Trophy, Users, Sparkles } from "lucide-react";
+import { InstagramLogo as Instagram, YoutubeLogo as Youtube } from "@phosphor-icons/react";
 import { MaskedReveal, FadeUp } from "@/components/Kinetic";
-import { NR_LIST } from "@/lib/nrData";
-import { buildWhatsappUrl, api } from "@/lib/api";
-import { useSettings } from "@/context/SettingsContext";
 import Seo from "@/components/Seo";
+import ImageSlot from "@/components/ImageSlot";
+import SectionTitle from "@/components/SectionTitle";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { TEST_IDS } from "@/lib/testIds";
+import { HERO_BG, GALLERY_ITEMS } from "@/lib/mediaPlaceholders";
+import { CATEGORIES, HIGHLIGHTS, STATS, SOCIAL, HASHTAG } from "@/lib/univoleiData";
 
-const HERO_IMG =
-    "https://images.unsplash.com/photo-1581092160607-ee22621dd758?crop=entropy&cs=srgb&fm=jpg&auto=format&w=1600&q=85";
-
-const CHAPTERS = [
-    {
-        n: "01",
-        title: "Planejar",
-        text: "Avaliar riscos de forma realista e definir controles eficazes antes da execução.",
-    },
-    {
-        n: "02",
-        title: "Fazer",
-        text: "Implementar ações, treinar as equipes envolvidas e monitorar a eficácia em campo.",
-    },
-    {
-        n: "03",
-        title: "Checar",
-        text: "Melhorar continuamente, aprender com os desvios e acompanhar os resultados práticos.",
-    },
-    {
-        n: "04",
-        title: "Agir",
-        text: "Corrigir falhas, documentar lições aprendidas, revisar processos e evoluir a cultura.",
-    },
-];
-
-const DIFERENCIAIS = [
-    { icon: MagnifyingGlass, title: "Antecipar Desvios", text: "Aprenda com os desvios cotidianos antes que eles se transformem em acidentes graves." },
-    { icon: Heartbeat, title: "Apoiar Pessoas", text: "As pessoas são a solução, não o problema. Focamos no cuidado humano e no suporte." },
-    { icon: ShieldCheck, title: "Segurança Psicológica", text: "Criamos um ambiente onde relatar riscos e falhas é seguro e incentivado." },
-    { icon: Target, title: "Fortalecer a Cultura", text: "Construímos uma cultura inquebrável, técnica e sustentável baseada em transparência." },
-];
+const FEED = GALLERY_ITEMS.filter((g) => g.id.startsWith("feed-"));
+const YT_COVER = GALLERY_ITEMS.find((g) => g.id === "youtube-capa");
+const CARD_TEST_IDS = {
+    adulto: TEST_IDS.categoryCardAdulto,
+    projeto: TEST_IDS.categoryCardProjeto,
+    "nova-geracao": TEST_IDS.categoryCardNovaGeracao,
+};
 
 export default function Home() {
-    const { settings } = useSettings();
     const heroRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: heroRef,
-        offset: ["start start", "end start"],
-    });
-    const yImg = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
-    const yText = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
-
-    const waHref = (msg) => buildWhatsappUrl(settings.whatsapp || "5519996840992", msg);
+    const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+    const yImg = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
     return (
         <>
             <Seo
-                title="PETRUS Consultoria — 25 Anos Construindo Prevenção"
-                description="Especialistas em Segurança do Trabalho, Gestão de Emergências e Consultoria Humanizada baseada na Abordagem HOP."
+                title="Univôlei Sumaré | Time e Projeto de Voleibol #Vem_Ser_Uni"
+                description="Time e projeto de voleibol de Sumaré/SP fundado em 14/11/2022. Treinos adulto, projeto, Nova Geração e Seletivas 2k27."
             />
 
             {/* ================= HERO ================= */}
-            <section ref={heroRef} className="relative overflow-hidden bg-[color:var(--petrus-black)]">
-                <div className="absolute inset-0 grid-lines opacity-40" />
-                <div className="absolute inset-0 spotlight-yellow" />
+            <section ref={heroRef} className="relative overflow-hidden">
+                <div className="absolute inset-0 court-lines" />
+                <div className="absolute inset-0 spotlight-uni" />
 
-                <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 pt-16 md:pt-24 pb-14 grid gap-14 lg:grid-cols-12 lg:gap-10 items-end">
-                    <motion.div style={{ y: yText }} className="lg:col-span-8 space-y-10">
-                        <div className="flex items-center gap-3 text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)]">
-                            <span className="w-8 h-px bg-[color:var(--petrus-yellow)]" />
-                            <span>Pessoas · Consciência · Prevenção</span>
-                        </div>
+                <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 pt-14 md:pt-20 pb-16 grid gap-12 lg:grid-cols-12 items-center">
+                    <div className="lg:col-span-7 space-y-8">
+                        <motion.span
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+                            className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-uni-orange"
+                        >
+                            🦁 Desde 14/11/2022 • Sumaré/SP
+                        </motion.span>
 
                         <MaskedReveal
                             tag="h1"
-                            className="font-display uppercase text-[3rem] sm:text-[4.5rem] lg:text-[6.5rem] leading-[0.86] tracking-[-0.03em] text-neutral-900"
-                            lines={["Como manter", "Zero Acidentes", <span key="y" className="text-[color:var(--petrus-yellow)]">Graves?</span>]}
-                            stagger={0.14}
-                            duration={1.05}
+                            className="font-display uppercase italic text-[3rem] sm:text-[4.5rem] lg:text-[6rem] leading-[0.88] tracking-tight text-uni-silver"
+                            lines={[
+                                "Mais que um time,",
+                                "uma família",
+                                <span key="q">em <span className="text-gradient-uni">quadra.</span></span>,
+                            ]}
+                            stagger={0.12}
                         />
 
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.9, duration: 0.9 }}
-                            className="max-w-2xl text-neutral-700 text-base md:text-xl font-medium leading-relaxed"
+                            transition={{ delay: 0.7, duration: 0.7 }}
+                            className="font-display uppercase italic text-3xl md:text-4xl text-uni-blue"
                         >
-                            Não é sorte. É método, cultura e, acima de tudo, <span className="text-neutral-900 font-bold">olhar para as pessoas por inteiro</span>. Punir não previne falhas.
+                            {HASHTAG}
                         </motion.p>
 
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.1, duration: 0.9 }}
+                            transition={{ delay: 0.85, duration: 0.7 }}
                             className="flex flex-wrap items-center gap-4"
                         >
-                            <a
-                                href={waHref("Olá, gostaria de saber mais sobre a consultoria humanizada e abordagem HOP.")}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn-petrus"
-                                data-testid={TEST_IDS.heroCtaWhatsapp}
-                            >
-                                <WhatsappLogo size={18} weight="fill" />
-                                Iniciar Transformação
-                            </a>
-                            <Link to="/contato" className="btn-ghost" data-testid={TEST_IDS.heroCtaContato}>
-                                Formulário de Contato <ArrowRight size={16} />
+                            <Link to="/seletivas" className="btn-uni" data-testid={TEST_IDS.heroCtaSeletivas}>
+                                Seletivas 2k27 <ArrowRight size={18} />
+                            </Link>
+                            <Link to="/categorias" className="btn-uni-outline" data-testid={TEST_IDS.heroCtaCategorias}>
+                                Conhecer Categorias
                             </Link>
                         </motion.div>
-                    </motion.div>
+                    </div>
 
-                    <motion.div style={{ y: yImg }} className="lg:col-span-4 relative h-[420px] lg:h-[560px]">
-                        <div
-                            className="absolute inset-0 border border-[color:var(--petrus-border-hi)]"
-                            style={{ clipPath: "polygon(0 0, 100% 0, 92% 100%, 0% 100%)" }}
+                    <motion.div style={{ y: yImg }} className="lg:col-span-5">
+                        <motion.div
+                            initial={{ opacity: 0, rotate: -4, scale: 0.92 }}
+                            animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                            className="relative"
                         >
-                            <img
-                                src={HERO_IMG}
-                                alt="Profissional de segurança focado"
-                                className="w-full h-full object-cover grayscale contrast-125"
-                                loading="eager"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-transparent" />
-                        </div>
-                        <div className="absolute -bottom-4 -left-4 bg-[color:var(--petrus-yellow)] text-black px-4 py-3 font-mono-c uppercase text-xs tracking-[0.2em] font-bold">
-                            EXPERIÊNCIA · MÉTODO · RESULTADOS
-                        </div>
+                            <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-uni-orange/40 to-uni-blue/40 blur-2xl" />
+                            <ImageSlot slot={HERO_BG} aspectRatio="4/5" className="relative rounded-[1.75rem]" />
+                        </motion.div>
                     </motion.div>
                 </div>
 
-                <div className="relative border-t border-[color:var(--petrus-border)]">
-                    <div className="max-w-[1440px] mx-auto px-6 md:px-10 grid grid-cols-2 md:grid-cols-4 divide-x divide-[color:var(--petrus-border)]">
-                        {[
-                            ["25", "Anos de Experiência"],
-                            ["HOP", "Abordagem Prática"],
-                            ["ZERO", "Acidentes Graves"],
-                            ["360º", "Cuidado Humano"],
-                        ].map(([n, l]) => (
-                            <div key={l} className="py-8 px-4 md:px-8">
-                                <div className="font-display text-3xl md:text-5xl text-neutral-900">{n}</div>
-                                <div className="text-xs font-mono-c uppercase tracking-[0.2em] text-neutral-600 mt-2">{l}</div>
+                {/* Stats */}
+                <div className="relative border-y border-white/10 bg-uni-card/50">
+                    <div className="max-w-[1440px] mx-auto px-6 md:px-10 grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
+                        {STATS.map((s) => (
+                            <div key={s.label} className="py-7 px-4 md:px-8">
+                                <div className="font-display italic text-3xl md:text-5xl text-uni-orange">{s.value}</div>
+                                <div className="text-xs font-bold uppercase tracking-[0.18em] text-uni-muted mt-2">{s.label}</div>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            
-
-            {/* ================= SERVICES OVERVIEW ================= */}
-            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-24 md:py-32 grid gap-16 lg:grid-cols-12">
-                <div className="lg:col-span-5">
-                    <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Nossos serviços</p>
-                    <h2 className="font-display uppercase text-4xl md:text-6xl leading-[0.9] tracking-tight text-neutral-900">
-                        25 anos construindo <span className="text-[color:var(--petrus-yellow)]">prevenção</span>.
-                    </h2>
-                </div>
-                <div className="lg:col-span-7 grid sm:grid-cols-2 gap-px bg-[color:var(--petrus-border)]">
-                    {[
-                        { icon: Users, title: "Consultoria Humanizada", text: "Focada em pessoas, processos e na Abordagem HOP para resultados eficientes." },
-                        { icon: FileText, title: "Planos de Emergência", text: "Gestão robusta e planejamento focado na proteção de vidas e continuidade do negócio." },
-                        { icon: HardHat, title: "Treinamentos NR", text: "Capacitação normativa e formação de brigadistas com foco no aprendizado, não na culpa." },
-                        { icon: Lightbulb, title: "Engenharia & Psicologia", text: "Equipe sênior multidisciplinar unindo médicos, engenheiros e psicólogos organizacionais." },
-                    ].map((s, i) => (
-                        <FadeUp key={s.title} delay={i * 0.05}>
-                            <div className="bg-[color:var(--petrus-black)] p-8 md:p-10 min-h-[220px] flex flex-col justify-between hover:bg-[color:var(--petrus-card)] transition-colors">
-                                <s.icon size={32} className="text-[color:var(--petrus-yellow)]" />
-                                <div>
-                                    <h3 className="font-display uppercase text-2xl text-neutral-900 mt-6">{s.title}</h3>
-                                    <p className="text-neutral-600 mt-2 text-sm leading-relaxed">{s.text}</p>
-                                </div>
-                            </div>
-                        </FadeUp>
-                    ))}
-                </div>
-            </section>
-
-            {/* ================= MANIFESTO CHAPTERS (PDCA) ================= */}
-            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-24 md:py-32">
-                <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Nossa metodologia</p>
-                <h2 className="font-display uppercase text-4xl md:text-6xl leading-[0.9] tracking-tight text-neutral-900 mb-16 max-w-3xl">
-                    O método protege mais do que a reação.
-                </h2>
-                <div className="space-y-px bg-[color:var(--petrus-border)]">
-                    {CHAPTERS.map((c) => (
-                        <FadeUp key={c.n}>
-                            <div className="grid grid-cols-12 gap-6 bg-[color:var(--petrus-black)] py-10 md:py-14 px-4 md:px-6 items-start">
-                                <div className="col-span-3 md:col-span-2">
-                                    <div className="font-mono-c text-4xl md:text-6xl text-[color:var(--petrus-yellow)]">{c.n}</div>
-                                </div>
-                                <div className="col-span-9 md:col-span-4">
-                                    <h3 className="font-display uppercase text-2xl md:text-4xl text-neutral-900">{c.title}</h3>
-                                </div>
-                                <div className="col-span-12 md:col-span-6">
-                                    <p className="text-neutral-700 md:text-lg leading-relaxed">{c.text}</p>
-                                </div>
-                            </div>
-                        </FadeUp>
-                    ))}
-                </div>
-            </section>
-
-            {/* ================= DIFERENCIAIS (HOP) ================= */}
-            <section className="bg-[color:var(--petrus-surface)] border-y border-[color:var(--petrus-border)]">
-                <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-24 md:py-32">
-                    <div className="grid gap-14 lg:grid-cols-12">
-                        <div className="lg:col-span-5">
-                            <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6">/ Diferenciais</p>
-                            <h2 className="font-display uppercase text-4xl md:text-6xl leading-[0.9] tracking-tight text-neutral-900 mb-6">
-                                HOP na prática.
-                            </h2>
-                            <p className="text-neutral-700 text-lg leading-relaxed max-w-sm">
-                                Ignorar o esgotamento mental e o medo de reportar cria riscos ocultos. Construímos confiança e transparência nas operações.
-                            </p>
-                        </div>
-                        <div className="lg:col-span-7 grid sm:grid-cols-2 gap-8">
-                            {DIFERENCIAIS.map((d, i) => (
-                                <FadeUp key={d.title} delay={i * 0.05}>
-                                    <div className="border border-[color:var(--petrus-border)] p-6 md:p-8 h-full hover:border-[color:var(--petrus-yellow)] transition-colors">
-                                        <d.icon size={28} className="text-[color:var(--petrus-yellow)]" />
-                                        <h3 className="font-display uppercase text-xl text-neutral-900 mt-6">{d.title}</h3>
-                                        <p className="text-neutral-600 text-sm mt-3 leading-relaxed">{d.text}</p>
-                                    </div>
-                                </FadeUp>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* ================= ESTUDO DE CASO ================= */}
-            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-24 md:py-32 grid gap-14 lg:grid-cols-12 items-center">
-                <div className="lg:col-span-6">
-                    <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-6 bg-[color:var(--petrus-black)] inline-block px-4 py-2 font-bold">ESTUDO DE CASO</p>
-                    <h2 className="font-display uppercase text-4xl md:text-6xl leading-[0.9] tracking-tight text-neutral-900 mb-8">
-                        Case HONDA:<br /> Zero acidentes graves.
-                    </h2>
-                    <p className="text-neutral-700 text-xl leading-relaxed mb-8">
-                        Transparência, confiança e cuidado humano para operações de alta complexidade.
-                    </p>
-                    <div className="flex items-center gap-4 text-neutral-900 font-mono-c text-sm tracking-widest font-bold">
-                        <ArrowUpRight size={24} className="text-[color:var(--petrus-yellow)]" /> SEGURANÇA NÃO É SORTE. É GESTÃO.
-                    </div>
-                </div>
-                <div className="lg:col-span-6">
-                    <div className="aspect-[4/3] rounded-full overflow-hidden border-4 border-[color:var(--petrus-yellow)] p-2">
-                        <img 
-                            src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?crop=entropy&cs=srgb&fm=jpg&auto=format&w=800&q=85" 
-                            alt="Operação industrial complexa" 
-                            className="w-full h-full object-cover rounded-full grayscale"
-                        />
-                    </div>
-                </div>
-            </section>
-
-            {/* ================= FINAL CTA ================= */}
-            <section className="relative bg-[color:var(--petrus-yellow)] text-black overflow-hidden">
-                <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "repeating-linear-gradient(135deg, #000 0 2px, transparent 2px 12px)" }} />
-                <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 py-24 md:py-32 grid gap-10 lg:grid-cols-12 items-center">
-                    <div className="lg:col-span-8">
-                        <h2 className="font-display uppercase text-4xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tight mb-6">
-                            Pronto para uma cultura inquebrável?
-                        </h2>
-                        <p className="text-lg md:text-xl max-w-2xl font-medium">
-                            Pare de apagar incêndios e comece a construir uma cultura de segurança humana, técnica e sustentável. Vamos construir segurança que dura.
-                        </p>
-                    </div>
-                    <div className="lg:col-span-4 flex flex-col gap-4">
-                        <a
-                            href={waHref("Olá, quero agendar uma conversa sobre a cultura de segurança na minha empresa.")}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-3 bg-black text-[color:var(--petrus-yellow)] px-6 py-5 uppercase font-bold text-sm tracking-[0.1em] hover:bg-neutral-900 transition-colors"
+            {/* ================= DESTAQUES (STORIES) ================= */}
+            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-14">
+                <div className="flex gap-6 overflow-x-auto pb-4 snap-x" data-lenis-prevent>
+                    {HIGHLIGHTS.map((h, i) => (
+                        <motion.div
+                            key={h.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.05, duration: 0.5 }}
+                            className="snap-start shrink-0"
                         >
-                            <WhatsappLogo size={20} weight="fill" /> Falar com Especialista
+                            <Link to={h.to} className="group flex flex-col items-center gap-3 w-24 md:w-28">
+                                <span className="story-ring rounded-full p-[3px] transition-transform group-hover:scale-105">
+                                    <span className="block rounded-full bg-uni-bg p-[3px]">
+                                        <ImageSlot slot={h.cover} aspectRatio="1/1" compact className="w-[84px] md:w-[100px] rounded-full !border" />
+                                    </span>
+                                </span>
+                                <span className="text-xs font-bold text-center text-uni-silver group-hover:text-uni-orange transition-colors">{h.label}</span>
+                            </Link>
+                        </motion.div>
+                    ))}
+                </div>
+            </section>
+
+            {/* ================= SOBRE / O LEÃO ================= */}
+            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28 grid gap-12 lg:grid-cols-12 items-center">
+                <div className="lg:col-span-6 space-y-6">
+                    <SectionTitle eyebrow="O Leão de Sumaré">
+                        Nascemos em <span className="text-uni-orange">14/11/2022</span> para rugir em quadra.
+                    </SectionTitle>
+                    <FadeUp delay={0.1}>
+                        <p className="text-uni-muted text-lg leading-relaxed">
+                            O Univôlei é um time amador competitivo e um projeto de voleibol de Sumaré/SP. Treinamos sério, competimos com raça e
+                            acolhemos quem chega: do primeiro toque na bola às finais regionais, aqui ninguém joga sozinho.
+                        </p>
+                    </FadeUp>
+                    <FadeUp delay={0.15} className="flex flex-wrap gap-4">
+                        <Link to="/sobre" className="btn-uni-outline">Nossa história <ArrowRight size={16} /></Link>
+                        <a href={SOCIAL.youtube} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-uni-silver font-bold hover:text-uni-orange transition-colors">
+                            <Youtube size={20} className="text-red-500" /> youtube.com/@UnivoleiSumare
                         </a>
-                        <Link to="/contato" className="inline-flex items-center justify-center gap-3 border border-black px-6 py-5 uppercase font-bold text-sm tracking-[0.1em] hover:bg-black hover:text-[color:var(--petrus-yellow)] transition-colors">
-                            Ver contatos <ArrowRight size={18} />
+                    </FadeUp>
+                </div>
+                <div className="lg:col-span-6 grid grid-cols-3 gap-4">
+                    {[
+                        { icon: Users, t: "Família", d: "Atletas, comissão e torcida juntos." },
+                        { icon: Trophy, t: "Competição", d: "Municipal, CRV e ligas regionais." },
+                        { icon: Sparkles, t: "Formação", d: "Projeto e Nova Geração." },
+                    ].map((x, i) => (
+                        <FadeUp key={x.t} delay={i * 0.08}>
+                            <div className="glass rounded-2xl p-5 h-full">
+                                <x.icon className="text-uni-blue" size={26} />
+                                <h3 className="font-display uppercase italic text-2xl text-uni-silver mt-4">{x.t}</h3>
+                                <p className="text-uni-muted text-sm mt-1">{x.d}</p>
+                            </div>
+                        </FadeUp>
+                    ))}
+                </div>
+            </section>
+
+            {/* ================= CATEGORIAS ================= */}
+            <section className="border-y border-white/10 bg-uni-card/40">
+                <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                        <SectionTitle eyebrow="Categorias & Treinos" color="text-uni-blue">Escolha sua quadra.</SectionTitle>
+                        <Link to="/categorias" className="btn-uni-outline w-fit">Ver detalhes <ArrowRight size={16} /></Link>
+                    </div>
+                    <div className="grid md:grid-cols-3 gap-6">
+                        {CATEGORIES.map((c, i) => (
+                            <FadeUp key={c.slug} delay={i * 0.08}>
+                                <Link to="/categorias" data-testid={CARD_TEST_IDS[c.slug]} className="group block h-full">
+                                    <Card className="h-full overflow-hidden bg-uni-card/80 border-white/10 backdrop-blur-md transition-all group-hover:-translate-y-1 group-hover:border-uni-orange/60">
+                                        <ImageSlot slot={c.image} aspectRatio="4/5" className="rounded-none border-0 border-b-2" />
+                                        <CardContent className="p-6 space-y-3">
+                                            <Badge className="bg-uni-blue/15 text-uni-blue border-uni-blue/30 hover:bg-uni-blue/25 uppercase tracking-wider">{c.tag}</Badge>
+                                            <h3 className="font-display uppercase italic text-3xl text-uni-silver group-hover:text-uni-orange transition-colors">{c.title}</h3>
+                                            <p className="text-uni-muted text-sm leading-relaxed">{c.short}</p>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            </FadeUp>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ================= MURAL INSTAGRAM & YOUTUBE ================= */}
+            <section className="max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-28">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                    <SectionTitle eyebrow="Mural da Família Uni">Direto do {SOCIAL.instagramHandle}</SectionTitle>
+                    <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="btn-uni w-fit">
+                        <Instagram size={18} /> Seguir no Instagram
+                    </a>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                    {FEED.map((g, i) => (
+                        <FadeUp key={g.id} delay={(i % 4) * 0.05}>
+                            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="block hover:opacity-90 transition-opacity">
+                                <ImageSlot slot={g} aspectRatio="4/5" className="rounded-xl" />
+                            </a>
+                        </FadeUp>
+                    ))}
+                </div>
+
+                <FadeUp className="mt-10">
+                    <a
+                        href={SOCIAL.youtube}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group grid md:grid-cols-2 gap-0 overflow-hidden rounded-2xl glass hover:border-red-500/50 transition-colors"
+                    >
+                        <div className="relative">
+                            <ImageSlot slot={YT_COVER} aspectRatio="16/9" className="rounded-none border-0" />
+                            <span className="absolute inset-0 grid place-items-center pointer-events-none">
+                                <span className="w-16 h-16 rounded-full bg-red-600 grid place-items-center shadow-2xl group-hover:scale-110 transition-transform">
+                                    <Play className="text-white fill-white ml-1" size={26} />
+                                </span>
+                            </span>
+                        </div>
+                        <div className="p-8 md:p-10 flex flex-col justify-center gap-4">
+                            <Badge className="w-fit bg-red-600/15 text-red-400 border-red-500/30 hover:bg-red-600/25">YouTube</Badge>
+                            <h3 className="font-display uppercase italic text-3xl md:text-5xl text-uni-silver">Jogos, bastidores e transmissões</h3>
+                            <p className="text-uni-muted">Acompanhe o Leão no canal {SOCIAL.youtubeHandle}.</p>
+                            <span className="inline-flex items-center gap-2 text-uni-orange font-bold">Assistir no canal <ArrowRight size={16} /></span>
+                        </div>
+                    </a>
+                </FadeUp>
+            </section>
+
+            {/* ================= CTA FINAL ================= */}
+            <section className="relative overflow-hidden bg-gradient-to-br from-uni-orange to-uni-orange-2">
+                <div className="absolute inset-0 opacity-10 court-lines" />
+                <div className="relative max-w-[1440px] mx-auto px-6 md:px-10 py-20 md:py-24 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+                    <h2 className="font-display uppercase italic text-5xl md:text-7xl leading-[0.9] text-white max-w-3xl">
+                        Bora rugir com a gente? {HASHTAG}
+                    </h2>
+                    <div className="flex flex-wrap gap-4">
+                        <Link to="/seletivas" className="inline-flex items-center gap-2 rounded-full bg-uni-bg text-white px-7 py-4 font-extrabold uppercase tracking-wider text-sm hover:bg-black transition-colors">
+                            Quero participar <ArrowRight size={18} />
+                        </Link>
+                        <Link to="/contato" className="inline-flex items-center gap-2 rounded-full border-2 border-white text-white px-7 py-4 font-extrabold uppercase tracking-wider text-sm hover:bg-white hover:text-uni-orange transition-colors">
+                            Seja patrocinador
                         </Link>
                     </div>
                 </div>

@@ -4,12 +4,13 @@ import { api } from "@/lib/api";
 const SettingsContext = createContext(null);
 
 const FALLBACK = {
-    whatsapp: "551999684-0992",
-    telefone: "(11) 9 99684-0992",
-    email: "petro_seg@hotmail.com",
-    endereco: "Campinas — São Paulo/SP",
-    instagram: "https://instagram.com/petrus_sst",
-    linkedin: "https://linkedin.com/company/petrusconsultoria",
+    // Valores reais são definidos no Painel Admin → Configurações.
+    whatsapp: "",
+    telefone: "",
+    email: "",
+    endereco: "Sumaré — São Paulo/SP",
+    instagram: "https://www.instagram.com/univolei_sumare/",
+    youtube: "https://youtube.com/@UnivoleiSumare",
     ga4_id: "",
     gads_id: "",
     gads_conversion_label: "",

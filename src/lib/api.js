@@ -20,8 +20,12 @@ export function formatApiErrorDetail(detail) {
     return String(detail);
 }
 
+export const DEFAULT_WA_MESSAGE =
+    "Olá! Vim pelo site do Univôlei Sumaré e gostaria de informações sobre treinos/seletivas!";
+
 export function buildWhatsappUrl(number, message) {
-    const digits = (number || "").replace(/\D/g, "") || "5519996840992";
-    const encoded = encodeURIComponent(message || "Olá, gostaria de solicitar um orçamento com a PETRUS Consultoria.");
+    // Sem número configurado, wa.me/ abre o seletor de contatos do WhatsApp.
+    const digits = (number || "").replace(/\D/g, "");
+    const encoded = encodeURIComponent(message || DEFAULT_WA_MESSAGE);
     return `https://wa.me/${digits}?text=${encoded}`;
 }

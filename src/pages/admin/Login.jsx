@@ -34,25 +34,25 @@ export default function AdminLogin() {
 
     return (
         <>
-            <Seo title="Área Administrativa · PETRUS" description="Acesso restrito." />
+            <Seo title="Painel · Univôlei Sumaré" description="Acesso restrito." />
             <section className="min-h-[80vh] flex items-center justify-center px-6 py-16">
-                <form onSubmit={submit} className="w-full max-w-md border border-[color:var(--petrus-border-hi)] p-10 bg-[color:var(--petrus-surface)] space-y-6">
+                <form onSubmit={submit} className="w-full max-w-md border border-white/10 p-10 bg-uni-card space-y-6">
                     <div>
-                        <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-[color:var(--petrus-yellow)] mb-3">/ Painel</p>
-                        <h1 className="font-display uppercase text-3xl text-neutral-900">Área administrativa</h1>
+                        <p className="text-xs font-mono-c uppercase tracking-[0.25em] text-uni-orange mb-3">/ Painel</p>
+                        <h1 className="font-display uppercase text-3xl text-uni-silver">Área administrativa</h1>
                     </div>
                     <label className="block">
-                        <span className="block text-xs font-mono-c uppercase tracking-[0.2em] text-neutral-600 mb-2">E-mail</span>
+                        <span className="block text-xs font-mono-c uppercase tracking-[0.2em] text-uni-muted mb-2">E-mail</span>
                         <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} data-testid={TEST_IDS.adminEmail}
-                            className="w-full bg-white border border-[color:var(--petrus-border-hi)] px-4 py-3 text-neutral-900 outline-none focus:border-[color:var(--petrus-yellow)]" />
+                            className="w-full bg-uni-bg border border-white/10 px-4 py-3 text-uni-silver outline-none focus:border-uni-orange" />
                     </label>
                     <label className="block">
-                        <span className="block text-xs font-mono-c uppercase tracking-[0.2em] text-neutral-600 mb-2">Senha</span>
+                        <span className="block text-xs font-mono-c uppercase tracking-[0.2em] text-uni-muted mb-2">Senha</span>
                         <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} data-testid={TEST_IDS.adminPassword}
-                            className="w-full bg-white border border-[color:var(--petrus-border-hi)] px-4 py-3 text-neutral-900 outline-none focus:border-[color:var(--petrus-yellow)]" />
+                            className="w-full bg-uni-bg border border-white/10 px-4 py-3 text-uni-silver outline-none focus:border-uni-orange" />
                     </label>
-                    {err && <div className="text-red-600 text-sm" data-testid={TEST_IDS.adminLoginError}>{err}</div>}
-                    <button type="submit" disabled={busy} data-testid={TEST_IDS.adminLoginSubmit} className="btn-petrus w-full justify-center disabled:opacity-60">
+                    {err && <div className="text-red-400 text-sm" data-testid={TEST_IDS.adminLoginError}>{err}</div>}
+                    <button type="submit" disabled={busy} data-testid={TEST_IDS.adminLoginSubmit} className="btn-uni w-full justify-center disabled:opacity-60">
                         {busy ? "Entrando..." : "Entrar"}
                     </button>
                 </form>
